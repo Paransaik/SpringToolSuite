@@ -1,0 +1,20 @@
+create table reply(
+rno number not null primary key, --댓글 번호
+bno number default 0, --원글 번호
+replytext varchar2(1000) not null, --댓글 내용
+replyer varchar2(50) not null, --댓글 작성자 아이디
+regdate date default sysdate, --댓글 작성 날짜
+updatedate date default sysdate --댓글 수정 날짜
+);
+
+--foreign key 설정
+alter table reply add constraint fk_board
+foreign key(bno) references board(bno);
+--댓글 번호 관리를 위한 시퀸스 생성
+create sequence reply_seq
+start with 1
+increment by 1;
+
+select*from reply; --댓글 보기
+
+commit;

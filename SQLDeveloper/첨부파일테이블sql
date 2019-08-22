@@ -1,0 +1,32 @@
+drop table attach cascade constraints;
+create table attach(
+fullName varchar2(150) not null, --첨부파일 이름(uuid)
+bno number not null,             --게시물 번호
+regdate date default sysdate,    --업로드 날짜
+primary key(fullName)
+);
+
+--bno 칼럼에 foreign key 설정
+alter table attach add constraint fk_board_attach
+foreign key(bno) references board(bno);
+
+insert into attach values('a.txt', 1000, sysdate);
+insert into attach values('b.txt', 2000, sysdate);
+
+commit;
+
+select*from attach;
+
+--board 테이블의 bno 컬럼을 위한 시퀸스 생성
+drop sequence seq_board;
+create sequence seq_board
+start with 1
+increment by 1;
+
+delete from attach;
+delete from reply;
+delete from board;
+
+select*from attach;
+
+commit;
